@@ -54,7 +54,7 @@ async def _start(event):
                     Button.url("👨‍💻 DEV", url="t.me/kaif_00z"),
                     Button.url(
                         "💖 OPEN SOURCE",
-                        url="https://t.me/fhjjknhhg,
+                        url="https://t.me/fhjjknhhg",
                     ),
                 ]
             ],
