@@ -1,4 +1,3 @@
-
 from traceback import format_exc
 
 import anitopy
@@ -112,7 +111,7 @@ Uploaded by ~ [𝗔𝗡𝗜𝗗𝗜𝗩𝗘™](http://t.me/ANIDIVE)
             LOGS.error(str(error))
             LOGS.exception(format_exc())
             return self.name
-            
+
     def get_proper_name_for_func(self, name):
         try:
             data = anitopy.parse(name)
