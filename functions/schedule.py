@@ -42,10 +42,6 @@ class ScheduleTasks:
             os.execl(sys.executable, sys.executable, "bot.py")
         except Exception as error:
             LOGS.error(str(error))
-            self.send_message(
-                Var.OWNER, f"Failed to restart: {error}"
-            )
+            self.send_message(Var.OWNER, f"Failed to restart: {error}")
         else:
-            self.send_message(
-                Var.OWNER, "Bot restarted successfully!"
-            )
+            self.send_message(Var.OWNER, "Bot restarted successfully!")
