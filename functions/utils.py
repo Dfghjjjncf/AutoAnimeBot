@@ -28,9 +28,7 @@ class AdminUtils:
         return [[Button.inline("◀️ Back", data="bek")]]
 
     async def _logs(self, e):
-        await e.reply(
-            file="AutoAnimeBot.log"
-        )
+        await e.reply(file="AutoAnimeBot.log")
 
     async def _restart(self, e, schedule):
         await e.reply("**Restarting...**")
@@ -39,13 +37,9 @@ class AdminUtils:
     async def _encode_t(self, e):
         if self.db.is_original_upload():
             self.db.toggle_original_upload()
-            return await e.edit(
-                "**File Compression - ON**", buttons=self.back_btn()
-            )
+            return await e.edit("**File Compression - ON**", buttons=self.back_btn())
         self.db.toggle_original_upload()
-        return await e.edit(
-            "**File Compression - OFF**", buttons=self.back_btn()
-        )
+        return await e.edit("**File Compression - OFF**", buttons=self.back_btn())
 
     async def _btn_t(self, e):
         if self.db.is_separate_channel_upload():
@@ -55,9 +49,7 @@ class AdminUtils:
             )
         if self.db.is_button_upload():
             self.db.toggle_button_upload()
-            return await e.edit(
-                "**Button Upload - OFF**", buttons=self.back_btn()
-            )
+            return await e.edit("**Button Upload - OFF**", buttons=self.back_btn())
         self.db.toggle_button_upload()
         return await e.edit("**Button Upload - ON", buttons=self.back_btn())
 
