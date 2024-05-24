@@ -1,21 +1,3 @@
-#    This file is part of the AutoAnime distribution.
-#    Copyright (c) 2024 Kaif_00z
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, version 3.
-#
-#    This program is distributed in the hope that it will be useful, but
-#    WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-#    General Public License for more details.
-#
-# License can be found in <
-# https://github.com/kaif-00z/AutoAnimeBot/blob/main/LICENSE > .
-
-# if you are using this following code then don't forgot to give proper
-# credit to t.me/kAiF_00z (github.com/kaif-00z)
-
 import aiohttp
 from AnilistPython import Anilist
 
@@ -31,7 +13,7 @@ class RawAnimeInfo:
         except BaseException:
             _raw_data = {}
         if not raw_data:
-            data = {}  # self.alt_anilist(query)
+            data = self.alt_anilist(query)
             return data
         data = {}
         data["anime_id"] = raw_data.get("id")
@@ -50,7 +32,7 @@ class RawAnimeInfo:
         # data["score"] = raw_data.get("attributes", {}).get("averageRating") or "N/A"
         data["type"] = raw_data.get("attributes", {}).get("showType") or "TV"
         data["runtime"] = raw_data.get("attributes", {}).get("episodeLength") or 24
-        return {**(data if data else {}), **(_raw_data if _raw_data else {})}
+        return {**data, **_raw_data}
 
     async def searcher(
         self,
@@ -64,21 +46,8 @@ class RawAnimeInfo:
                 links = (await data.json())["data"]
                 for index in range(len(links)):
                     res_data = await self.re_searcher(links[index]["links"]["self"])
-                    if res_data["data"]["attributes"]["status"] == "tba":
-                        continue
-                    if "current" != res_data["data"]["attributes"]["status"]:
-                        if (
-                            res_data["data"]["attributes"]["endDate"]
-                            or res_data["data"]["attributes"]["startDate"]
-                        ):
-                            if "2024" not in (
-                                res_data["data"]["attributes"]["endDate"] or ""
-                            ):
-                                if "2024" not in (
-                                    res_data["data"]["attributes"]["startDate"] or ""
-                                ):
-                                    continue
-                    return res_data
+                    if res_data["data"]["attributes"]["status"] == "current":
+                        return res_data
             except BaseException:
                 raise ValueError("Kitsu: Search Link Not Found")
 
