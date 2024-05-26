@@ -10,12 +10,11 @@ class AnimeInfo:
     def __init__(self, name):
         self.kitsu = RawAnimeInfo()
         self.CAPTION = """
-〄 **{}**
+**〄 {}**
 
 **╭────────────────────╮**
 ‣ **Type:** {}
 ‣ **Status:** {}
-‣** Genres:** {}
 ‣ **Episode:** {}
 ‣ **Audio:** Japanese
 ‣ **Subtitle:** English
@@ -68,7 +67,6 @@ Uploaded by ~ [𝗔𝗡𝗜𝗗𝗜𝗩𝗘™](http://t.me/ANIDIVE)
                     (await self.get_english()),
                     anime.get("type"),
                     anime_status,
-                    ", ".join(anime.get("genres")),
                     (
                         str(self.data.get("episode_number")).zfill(2)
                         if self.data.get("episode_number")
