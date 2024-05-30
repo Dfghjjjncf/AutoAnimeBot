@@ -28,5 +28,5 @@ class Var:
 
     THUMB = "https://telegra.ph/file/c96889c963398127b4b33.jpg"
     FFMPEG = config("FFMPEG", default="ffmpeg")
-    CRF = config("CRF", default="27")
+    CRF = "27"
     SEND_SCHEDULE = True
