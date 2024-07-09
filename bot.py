@@ -1,21 +1,3 @@
-#    This file is part of the AutoAnime distribution.
-#    Copyright (c) 2024 Kaif_00z
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, version 3.
-#
-#    This program is distributed in the hope that it will be useful, but
-#    WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-#    General Public License for more details.
-#
-# License can be found in <
-# https://github.com/kaif-00z/AutoAnimeBot/blob/main/LICENSE > .
-
-# if you are using this following code then don't forgot to give proper
-# credit to t.me/kAiF_00z (github.com/kaif-00z)
-
 import re
 from traceback import format_exc
 
@@ -48,50 +30,31 @@ admin = AdminUtils(dB, bot)
     )
 )
 async def _start(event):
-    xnx = await event.reply("`Please Wait...`")
+    xnx = await event.reply("**Connecting...**")
     msg_id = event.pattern_match.group(1)
     dB.add_broadcast_user(event.sender_id)
-    if Var.FORCESUB_CHANNEL and Var.FORCESUB_CHANNEL_LINK:
-        is_user_joined = await bot.is_joined(Var.FORCESUB_CHANNEL, event.sender_id)
-        if is_user_joined:
-            pass
-        else:
-            return await xnx.edit(
-                f"**Please Join The Following Channel To Use This Bot 🫡**",
-                buttons=[
-                    [Button.url("🚀 JOIN CHANNEL", url=Var.FORCESUB_CHANNEL_LINK)],
-                    [
-                        Button.url(
-                            "♻️ REFRESH",
-                            url=f"https://t.me/{((await bot.get_me()).username)}?start={msg_id}",
-                        )
-                    ],
-                ],
-            )
     if msg_id:
         if msg_id.isdigit():
             msg = await bot.get_messages(Var.BACKUP_CHANNEL, ids=int(msg_id))
             await event.reply(msg)
+            await event.delete()
         else:
-            items = dB.get_store_items(msg_id)
-            if items:
-                for id in items:
-                    msg = await bot.get_messages(Var.CLOUD_CHANNEL, ids=id)
-                    await event.reply(file=[i for i in msg])
+            await xnx.delete()
     else:
         if event.sender_id == Var.OWNER:
             return await xnx.edit(
-                "** <                ADMIN PANEL                 > **",
+                "**Bot Admin Settings**",
                 buttons=admin.admin_panel(),
             )
         await event.reply(
-            f"**Enjoy Ongoing Anime's Best Encode 24/7 🫡**",
+            file="https://graph.org/file/8bb750efbe7f08176e2ae.png",
+            message=f"**Hey {event.sender.first_name}!,\n\n   I am Auto Animes Store & Automater Encoder Build with ❤️ !!**",
             buttons=[
                 [
-                    Button.url("👨‍💻 DEV", url="t.me/kaif_00z"),
+                    Button.url("📣 Updates", url="t.me/ANIDIVE"),
                     Button.url(
-                        "💖 OPEN SOURCE",
-                        url="https://github.com/kaif-00z/AutoAnimeBot/",
+                        "🗂️ Anime Index",
+                        url="https://t.me/Anime_Index0",
                     ),
                 ]
             ],
@@ -150,7 +113,7 @@ async def anime(data):
                 buttons=[
                     [
                         Button.url(
-                            f"EPISODE {anime_info.data.get('episode_number', '')}".strip(),
+                            f"✨ EPISODE {anime_info.data.get('episode_number', '')}".strip(),
                             url=chat_info["invite_link"],
                         )
                     ]
