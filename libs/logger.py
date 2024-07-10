@@ -1,24 +1,5 @@
-#    This file is part of the AutoAnime distribution.
-#    Copyright (c) 2024 Kaif_00z
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, version 3.
-#
-#    This program is distributed in the hope that it will be useful, but
-#    WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-#    General Public License for more details.
-#
-# License can be found in <
-# https://github.com/kaif-00z/AutoAnimeBot/blob/main/LICENSE > .
-
-# if you are using this following code then don't forgot to give proper
-# credit to t.me/kAiF_00z (github.com/kaif-00z)
-
 import asyncio
 import logging
-from traceback import format_exc
 
 from telethon import Button, TelegramClient
 from telethon.errors.rpcerrorlist import FloodWaitError
@@ -41,10 +22,6 @@ TelethonLogger.setLevel(logging.INFO)
 LOGS.info(
     """
                         Auto Anime Bot
-                ©️ t.me/kAiF_00z (github.com/kaif-00z)
-                        v0.0.7 (original)
-                             (2023-24)
-                       [All Rigth Reserved]
 
     """
 )
@@ -60,36 +37,31 @@ class Reporter:
         await self.awake()
         msg = await self.client.send_message(
             Var.LOG_CHANNEL,
-            f"**New Anime Released**\n\n **File Name:** ```{self.file_name}```\n\n**STATUS:** `Downloading...`",
+            f"**➤ Anime Name:** {self.file_name}\n\n__Downloading files...__",
         )
         self.msg = msg
 
     async def started_compressing(self, btn):
         self.msg = await self.msg.edit(
-            f"**Successfully Downloaded The Anime**\n\n **File Name:** ```{self.file_name}```\n\n**STATUS:** `Encoding...`",
+            f"**➤ Anime Name:** {self.file_name}\n\n__Encoding files...__",
             buttons=btn,
         )
 
     async def started_renaming(self):
         self.msg = await self.msg.edit(
-            f"**Successfully Downloaded The Anime**\n\n **File Name:** ```{self.file_name}```\n\n**STATUS:** `Renaming...`",
+            f"**➤ Anime Name:** {self.file_name}\n\n__Renaming file...__",
             buttons=[[Button.inline("✒️", data="uwu")]],
         )
 
     async def started_uploading(self):
         self.msg = await self.msg.edit(
-            f"**Successfully Encoded The Anime**\n\n **File Name:** ```{self.file_name}```\n\n**STATUS:** `Uploading...`",
+            f"**➤ Anime Name:** {self.file_name}\n\n__Uploading file...__",
             buttons=[],
-        )
-
-    async def started_gen_ss(self):
-        self.msg = await self.msg.edit(
-            f"**Successfully Uploaded The Anime**\n\n **File Name:** ```{self.file_name}```\n\n**STATUS:** `Generating Sample And Screen Shot...`"
         )
 
     async def all_done(self):
         self.msg = await self.msg.edit(
-            f"**Successfully Completed All Task Related To The Anime**\n\n **File Name:** ```{self.file_name}```\n\n**STATUS:** `DONE`"
+            f"**➤ Anime Name:** {self.file_name}\n\n**__Task Completed!__**"
         )
 
     async def awake(self):  # in case
@@ -101,7 +73,7 @@ class Reporter:
         if log:
             LOGS.error(txt[0])
         try:
-            await self.client.send_message(Var.LOG_CHANNEL, f"```{txt[:4096]}```")
+            await self.client.send_message(Var.LOG_CHANNEL, f"{txt[:4096]}")
         except FloodWaitError as fwerr:
             await self.client.disconnect()
             LOGS.info("Sleeping Becoz Of Floodwait...")
@@ -110,5 +82,4 @@ class Reporter:
         except ConnectionError:
             await self.client.connect()
         except Exception as err:
-            LOGS.exception(format_exc())
             LOGS.error(str(err))
